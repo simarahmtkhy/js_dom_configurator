@@ -1,11 +1,4 @@
 actions:
-  - type: remove
-    selector: ".ad-banner"
-    priority: 2
-  - type: replace
-    selector: "#old-header"
-    newElement: "<header id='new-header'><h1>Welcome to My New Website</h1></header>"
-    priority: 1
   - type: insert
     position: "after"
     target: "nav"
