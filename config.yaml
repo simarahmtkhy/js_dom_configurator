@@ -1,13 +1,17 @@
 actions:
   - type: remove
     selector: ".ad-banner"
+    priority: 2
   - type: replace
     selector: "#old-header"
     newElement: "<header id='new-header'><h1>Welcome to My New Website</h1></header>"
+    priority: 1
   - type: insert
     position: "after"
     target: "nav"
     element: "<section><h2>Latest News</h2><p>Stay updated with the latest news here.</p></section>"
+    priority: 3
   - type: alter
     oldValue: "Machine Learning"
     newValue: "AI"
+    priority: 2

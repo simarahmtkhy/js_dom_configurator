@@ -46,7 +46,10 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             function applyConfigurations(config) {
-                config.actions.forEach(action => {
+                // Sort actions by priority
+                const sortedActions = config.actions.sort((a, b) => a.priority - b.priority);
+
+                sortedActions.forEach(action => {
                     switch(action.type) {
                         case 'remove':
                             removeElements(action.selector);
