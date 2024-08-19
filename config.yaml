@@ -1,0 +1,13 @@
+actions:
+  - type: remove
+    selector: ".ad-banner"
+  - type: replace
+    selector: "#old-header"
+    newElement: "<header id='new-header'><h1>Welcome to My New Website</h1></header>"
+  - type: insert
+    position: "after"
+    target: "nav"
+    element: "<section><h2>Latest News</h2><p>Stay updated with the latest news here.</p></section>"
+  - type: alter
+    oldValue: "Machine Learning"
+    newValue: "AI"
