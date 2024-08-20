@@ -1,0 +1,10 @@
+actions:
+  - type: replace
+    selector: "#list-header"
+    newElement: "<header id='list-header'><h1>Updated Product List</h1></header>"
+    priority: 1
+  - type: insert
+    position: "append"
+    target: ".products"
+    element: "<p>New products have been added to the list.</p>"
+    priority: 2

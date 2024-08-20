@@ -1,0 +1,10 @@
+actions:
+  - type: replace
+    selector: "#details-header"
+    newElement: "<header id='details-header'><h1>Updated Product Details</h1></header>"
+    priority: 1
+  - type: insert
+    position: "before"
+    target: ".product-details"
+    element: "<p>Special offer available!</p>"
+    priority: 2

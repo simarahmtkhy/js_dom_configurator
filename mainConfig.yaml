@@ -1,0 +1,5 @@
+datasource:
+  pages:
+    list: A.yaml
+    details: B.yaml
+    cart: [A.yaml, B.yaml]

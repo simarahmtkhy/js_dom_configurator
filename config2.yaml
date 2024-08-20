@@ -3,8 +3,8 @@ actions:
     position: "after"
     target: "nav"
     element: "<section><h2>Latest News</h2><p>Stay updated with the latest news here.</p></section>"
-    priority: 3
+    priority: 1
   - type: alter
-    oldValue: "Machine Learning"
-    newValue: "AI"
+    oldValue: "technology"
+    newValue: "innovation"
     priority: 2
