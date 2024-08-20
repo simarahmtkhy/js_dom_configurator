@@ -22,38 +22,59 @@ This application dynamically modifies an HTML document based on configurations p
    - Clone this repository to your local machine or download the ZIP file and extract it.
 
 2. **File Structure**
-   - Ensure the following files are present in the directory:
-     - `demo.html`: The main HTML file that will be modified by default configurations.
-     - `list.html`, `details.html`, `cart.html`: Additional HTML files that will be modified based on the specific configurations in `mainConfig.yaml`.
-     - `app.js`: The JavaScript file that handles the dynamic modifications.
-     - `config1.yaml`, `config2.yaml`: Default YAML configuration files used when `mainConfig.yaml` is not present.
-     - `mainConfig.yaml`: A YAML file that maps specific pages, URLs, or hosts to their respective configuration files (`A.yaml`, `B.yaml`).
-     - `A.yaml`, `B.yaml`: YAML configuration files used when `mainConfig.yaml` is present.
-     - The `js-yaml` library is included via CDN in the HTML files.
+   - Ensure the following files and directories are present in the project structure:
+
+     **Directory Structure**:
+     ```
+     ├── config/
+     │   ├── config1.yaml
+     │   ├── config2.yaml
+     │   ├── mainConfig.yaml
+     │   ├── A.yaml
+     │   └── B.yaml
+     ├── src/
+     │   ├── app.js
+     │   ├── configManager.js
+     │   ├── actionHandlers.js
+     │   └── utils.js
+     ├── demo.html
+     ├── list.html
+     ├── details.html
+     └── cart.html
+     ```
 
 3. **Run a Local Server**
    - Use any method to serve the files locally, such as using an integrated development environment (IDE) or a simple HTTP server tool of your choice.
 
 4. **Open the Application in a Browser**
-   - To test the default configurations, open `http://localhost:8000/demo.html` in your browser, , ensure that mainConfig.yaml is either temporarily renamed or removed from the directory. This will prevent the application from loading specific configurations based on mainConfig.yaml and will instead use the default YAML files.
-   - To test the context-specific configurations, open `http://localhost:8000/list.html`, `http://localhost:8000/details.html`, or `http://localhost:8000/cart.html`.
+   - To test the default configurations, open `http://localhost:8000/demo.html` in your browser. Ensure that `mainConfig.yaml` is either temporarily renamed or removed from the `config/` directory. This will prevent the application from loading specific configurations based on `mainConfig.yaml` and will instead use the default YAML files (`config1.yaml`, `config2.yaml`).
+   - To test the context-specific configurations, open `http://localhost:8000/list.html`, `http://localhost:8000/details.html`, or `http://localhost:8000/cart.html`. Ensure that `mainConfig.yaml` is present in the `config/` directory.
    - The application will automatically apply the modifications specified in the YAML configuration files to the HTML documents.
 
 ## **Code Structure Overview**
 
 ### **Files and Directories**
-- **`demo.html`**: The main HTML file that will be dynamically modified based on the default configurations (`config1.yaml`, `config2.yaml`).
-- **`list.html`, `details.html`, `cart.html`**: Additional HTML files that will be modified according to the mappings in `mainConfig.yaml`.
-- **`app.js`**: The core JavaScript file containing all the logic for loading, parsing, and applying the configurations from YAML files.
-- **`config1.yaml`, `config2.yaml`**: Default YAML configuration files that define the actions to be applied to `demo.html`. Each action has a type (e.g., remove, replace, insert, alter) and an associated priority.
-- **`mainConfig.yaml`**: A YAML file that specifies which YAML configuration files to apply based on the current page, URL, or host.
-- **`A.yaml`, `B.yaml`**: YAML configuration files used for specific pages as defined in `mainConfig.yaml`.
 
-### **Key Components in `app.js`**
+- **HTML Files**:
+  - **`demo.html`**: The main HTML file that will be dynamically modified based on the default configurations (`config1.yaml`, `config2.yaml`).
+  - **`list.html`, `details.html`, `cart.html`**: Additional HTML files that will be modified according to the mappings in `mainConfig.yaml`.
+
+- **YAML Configuration Files** (`config/` directory):
+  - **`config1.yaml`, `config2.yaml`**: Default YAML configuration files that define the actions to be applied to `demo.html`. Each action has a type (e.g., remove, replace, insert, alter) and an associated priority.
+  - **`mainConfig.yaml`**: A YAML file that specifies which YAML configuration files to apply based on the current page, URL, or host.
+  - **`A.yaml`, `B.yaml`**: YAML configuration files used for specific pages as defined in `mainConfig.yaml`.
+
+- **JavaScript Files** (`src/` directory):
+  - **`app.js`**: The main entry point for the application that initializes the configuration loading process.
+  - **`configManager.js`**: Handles the loading and application of configurations, manages context-specific logic, and loads individual YAML configuration files.
+  - **`actionHandlers.js`**: Contains the functions that handle specific actions like removing, replacing, inserting, or altering elements in the DOM.
+  - **`utils.js`**: Contains utility functions like identifying the current page.
+
+### **Key Components in `configManager.js`**
 - **`loadAndApplyConfig(filePath)`**: Loads a YAML configuration file, parses it, and passes the configuration to the validation and application functions.
-- **`validateAndApplyConfigurations(config)`**: Validates the configuration structure and sorts actions by priority before applying them.
 - **`applyConfigsBasedOnContext(mainConfig)`**: Determines which configuration files to load based on the current host, URL, or page.
-- **Action Handlers (`handleRemoveAction`, `handleReplaceAction`, `handleInsertAction`, `handleAlterAction`)**: These functions perform specific DOM manipulations based on the action type.
+- **`loadMainConfig()`**: Loads and applies configurations based on the context (host, URL, or page) as specified in `mainConfig.yaml`.
+- **`loadDefaultConfigs()`**: Loads and applies default configurations if `mainConfig.yaml` is not present.
 
 ### **Assumptions**
 - **Priority System**: Actions in the YAML files are assumed to have a `priority` attribute. Actions with lower priority numbers are applied first.
